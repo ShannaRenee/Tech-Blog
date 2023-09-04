@@ -1,14 +1,15 @@
 const router = require('express').Router();
 const sequelize = require('../../config/connection')
 const { Post, User, Comment } = require('../../models');
+const withAuth = require('../../utils/auth');
 
 
-router.post('/', async (req, res) => {
+router.post('/', withAuth, async (req, res) => {
     try {
         const newComment = await Comment.create({
             text: req.body.text,
             postId: req.body.postId,
-            userId: req.body.userId
+            userId: req.session.userId
         });
         res.status(201).json(newComment)
     } catch (error) {
@@ -48,7 +49,7 @@ router.get('/:commentId', async (req, res) => {
     }
 });
 
-router.put('/:commentId', async (req, res) => {
+router.put('/:commentId', withAuth, async (req, res) => {
     try {
         const updatedComment = await Comment.update(req.body, {
             where: {
@@ -66,12 +67,12 @@ router.put('/:commentId', async (req, res) => {
     }
 })
 
-router.delete('/:commentId', async (req, res) => {
+router.delete('/:commentId', withAuth, async (req, res) => {
     try {
         const deletedComment = await Comment.destroy({
             where: {
                 id: req.params.commentId,
-                userId: req.sessions.userId
+                userId: req.session.userId
             }
         });
 

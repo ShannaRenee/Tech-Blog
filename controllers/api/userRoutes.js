@@ -1,6 +1,7 @@
 const router = require('express').Router();
-const sequelize = require('../../config/connection')
-const {User, Post, Comment} = require('../../models')
+const sequelize = require('../../config/connection');
+const {User, Post, Comment} = require('../../models');
+const withAuth = require('../../utils/auth')
 
 
 router.post('/', async (req, res) => {
@@ -48,8 +49,7 @@ router.get('/', async (req, res) => {
 
 
 // Route to retrieve logged in user's profile
-router.get('/profile', async (req, res) => {
-    if (!req.session.loggedIn) return res.redirect('/login');
+router.get('/profile', withAuth, async (req, res) => {
     try {
         const user = await User.findByPk(req.session.userId, {
             include: [
@@ -115,7 +115,7 @@ router.get('/:userId', async (req, res) => {
     }
 });
 
-router.put('/profile', async (req, res) => {
+router.put('/profile', withAuth, async (req, res) => {
     try {
         const updatedUser = await User.update(req.body, {
             where: {
@@ -134,8 +134,7 @@ router.put('/profile', async (req, res) => {
 });
 
 // route to delete a user by id
-router.delete('/profile', async (req, res) => {
-    if (!req.session.loggedIn) return res.redirect('/login');
+router.delete('/profile', withAuth, async (req, res) => {
     try {
         const deletedUser = await User.destroy({
             where: {
