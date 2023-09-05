@@ -30,3 +30,13 @@ body {
 footer {
     margin-top: auto;
 }
+
+.navbar-brand {
+    font-family: var(--rubik);
+    font-size: 50px;
+    color: var(--purple)
+}
+
+.navbar-custom .navbar-brand:hover {
+    color: var(--lighterpurple);
+}

@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
         });
 
         const serializedPosts = posts.map((post) => post.get({ plain: true}))
-        res.status(200).render('homepage', { posts: serializedPosts, loggedIn: true,
+        res.status(200).render('homepage', { posts: serializedPosts, loggedIn: req.session.loggedIn,
          })
     } catch (error) {
         console.log(error);
@@ -54,15 +54,18 @@ router.get('/post/:Id', async (req, res) => {
 });
 
 router.get('/signup', async (req, res) => {
+    if (req.session.loggedIn) return res.status(200).redirect('/');
+
     res
     .status(200)
-    .send('<h1>SIGN UP PAGE</h1><h2>Render the signup view.</h2>')
+    .render('signup')
 });
 
 router.get('/login', async (req, res) => {
+    if (req.session.loggedIn) return res.status(200).redirect('/');
     res
     .status(200)
-    .send('<h1>LOGIN PAGE</h1><h2>Render the login view.</h2>')
+    .render('login')
 });
 
 module.exports = router
