@@ -1,0 +1,32 @@
+:root {
+    --franklin: 'Libre Franklin', sans-serif;
+    --rubik: 'Rubik Iso', cursive;
+    --darkest: #231942;
+    --purple: #5E548E;
+    --lightpurple: #9F86C0;
+    --lighterpurple: #BE95C4;
+    --lightpink: #E0B1CB;
+}
+
+/* main.handlebars */
+body {
+    background-color: var(--darkest);
+    color: var(--lightpurple);
+    font-family: var(--franklin);
+    background-image: url(../assets/purple.jpg);
+    background-position: right;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.wrapper {
+    margin-right: 10vw;
+    margin-left: 5vw;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+footer {
+    margin-top: auto;
+}

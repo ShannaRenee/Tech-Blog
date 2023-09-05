@@ -17,7 +17,8 @@ router.get('/', async (req, res) => {
         });
 
         const serializedPosts = posts.map((post) => post.get({ plain: true}))
-        res.status(200).send('<h1>HOMEPAGE</h1><h2>Render the homepage view along with all posts retrieved.</h2>')
+        res.status(200).render('homepage', { posts: serializedPosts, loggedIn: true,
+         })
     } catch (error) {
         console.log(error);
         res.status(500).json(error);
